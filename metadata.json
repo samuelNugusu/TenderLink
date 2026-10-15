@@ -1,0 +1,8 @@
+{
+  "name": "TenderLink Ethiopia",
+  "description": "Ethiopian Furniture Workshop Consortium & Institutional Tender Platform",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

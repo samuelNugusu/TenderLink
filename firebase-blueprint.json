@@ -1,0 +1,377 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role and authentication details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["visitor", "basic", "premium", "admin"] },
+        "workshopId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "Workshop": {
+      "title": "Workshop",
+      "description": "Furniture workshop or craftsmanship business profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "ownerName": { "type": "string" },
+        "businessName": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "city": { "type": "string" },
+        "area": { "type": "string" },
+        "address": { "type": "string" },
+        "workshopType": { "type": "string" },
+        "specialties": { "type": "array" },
+        "machinery": { "type": "array" },
+        "monthlyCapacityUnits": { "type": "number" },
+        "workerCount": { "type": "number" },
+        "yearsOfExperience": { "type": "number" },
+        "pastProjectsSummary": { "type": "string" },
+        "verificationStatus": { "type": "string", "enum": ["unverified", "pending_review", "verified", "rejected", "suspended"] },
+        "availabilityStatus": { "type": "string", "enum": ["available", "busy", "partially_available"] },
+        "preferredContractSize": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "ownerId", "businessName", "verificationStatus"]
+    },
+    "Tender": {
+      "title": "Tender",
+      "description": "Institutional procurement opportunity listing",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "referenceNumber": { "type": "string" },
+        "title": { "type": "string" },
+        "issuingOrganization": { "type": "string" },
+        "buyerContact": { "type": "string" },
+        "productCategory": { "type": "string" },
+        "destinationCity": { "type": "string" },
+        "destinationRegion": { "type": "string" },
+        "publishedDate": { "type": "string" },
+        "submissionDeadline": { "type": "string" },
+        "estimatedBudgetETB": { "type": "number" },
+        "requiredQuantity": { "type": "number" },
+        "itemDescription": { "type": "string" },
+        "technicalSpecs": { "type": "string" },
+        "qualificationsRequired": { "type": "string" },
+        "deliveryScheduleWeeks": { "type": "number" },
+        "submissionMethod": { "type": "string" },
+        "sourceUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "published", "closing_soon", "closed", "awarded", "cancelled", "under_verification"] },
+        "isVerified": { "type": "boolean" },
+        "isJointBiddingPermitted": { "type": "boolean" },
+        "adminNotes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "referenceNumber", "title", "issuingOrganization", "submissionDeadline", "status"]
+    },
+    "TenderAward": {
+      "title": "TenderAward",
+      "description": "Historical verified winning bid and contract award record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenderReference": { "type": "string" },
+        "tenderTitle": { "type": "string" },
+        "buyerOrganization": { "type": "string" },
+        "awardedSupplier": { "type": "string" },
+        "awardDate": { "type": "string" },
+        "awardAmountETB": { "type": "number" },
+        "productCategory": { "type": "string" },
+        "quantityAwarded": { "type": "number" },
+        "officialSource": { "type": "string" },
+        "verificationStatus": { "type": "string", "enum": ["verified", "unverified", "disputed"] },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "tenderReference", "buyerOrganization", "awardDate", "verificationStatus"]
+    },
+    "CalendarEvent": {
+      "title": "CalendarEvent",
+      "description": "Tender deadline or consortium milestone event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "type": { "type": "string", "enum": ["tender_deadline", "consortium_deadline", "delivery_milestone", "document_deadline"] },
+        "relatedTenderId": { "type": "string" },
+        "relatedConsortiumId": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "title", "date", "type"]
+    },
+    "Consortium": {
+      "title": "Consortium",
+      "description": "Joint bidding group of workshops formed for a specific tender",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "reference": { "type": "string" },
+        "tenderId": { "type": "string" },
+        "organizerId": { "type": "string" },
+        "organizerWorkshopId": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "recruiting", "awaiting_acceptance", "ready_for_review", "approved_for_submission", "submitted", "awarded", "not_awarded", "cancelled", "in_execution"] },
+        "requiredTotalCapacity": { "type": "number" },
+        "committedTotalCapacity": { "type": "number" },
+        "notes": { "type": "string" },
+        "bidSubmissionDate": { "type": "string" },
+        "awardDate": { "type": "string" },
+        "totalContractValueETB": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "name", "tenderId", "organizerId", "status"]
+    },
+    "ConsortiumMember": {
+      "title": "ConsortiumMember",
+      "description": "Workshop participation in a specific consortium",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "consortiumId": { "type": "string" },
+        "workshopId": { "type": "string" },
+        "workshopName": { "type": "string" },
+        "userId": { "type": "string" },
+        "roleInConsortium": { "type": "string", "enum": ["lead", "member", "support"] },
+        "status": { "type": "string", "enum": ["invited", "accepted", "declined", "withdrawn", "approved"] },
+        "declaredCapacity": { "type": "number" },
+        "assignedSegment": { "type": "string" },
+        "allocatedQuantity": { "type": "number" },
+        "allocatedAmountETB": { "type": "number" },
+        "consentGiven": { "type": "boolean" },
+        "consentDate": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "consortiumId", "workshopId", "status"]
+    },
+    "TenderApplication": {
+      "title": "TenderApplication",
+      "description": "Expression of interest by a workshop for a tender",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenderId": { "type": "string" },
+        "workshopId": { "type": "string" },
+        "userId": { "type": "string" },
+        "availableCapacity": { "type": "number" },
+        "specialtiesOffered": { "type": "array" },
+        "willingToLead": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["pending", "reviewed", "invited_to_consortium", "declined"] },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "tenderId", "workshopId", "status"]
+    },
+    "ContractSegment": {
+      "title": "ContractSegment",
+      "description": "Specific parcel of goods or units in a tender consortium contract",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "consortiumId": { "type": "string" },
+        "title": { "type": "string" },
+        "productType": { "type": "string" },
+        "quantity": { "type": "number" },
+        "unitPriceETB": { "type": "number" },
+        "allocatedWorkshopId": { "type": "string" },
+        "allocatedWorkshopName": { "type": "string" },
+        "status": { "type": "string", "enum": ["unallocated", "offered_first_refusal", "allocated", "in_production", "completed"] },
+        "deliveryDeadline": { "type": "string" }
+      },
+      "required": ["id", "consortiumId", "title", "quantity", "status"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Action item or production milestone within a consortium",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "consortiumId": { "type": "string" },
+        "title": { "type": "string" },
+        "assignedWorkshopId": { "type": "string" },
+        "assignedWorkshopName": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["todo", "in_progress", "completed", "delayed"] },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "consortiumId", "title", "status"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "In-app operational alert or announcement",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["tender_match", "invitation", "status_change", "payment", "deadline"] },
+        "read": { "type": "boolean" },
+        "actionUrl": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "message", "read"]
+    },
+    "SubscriptionPlan": {
+      "title": "SubscriptionPlan",
+      "description": "Configurable platform membership tier and entitlements",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "planCode": { "type": "string", "enum": ["free", "basic", "premium"] },
+        "name": { "type": "string" },
+        "priceETB": { "type": "number" },
+        "billingPeriod": { "type": "string", "enum": ["monthly", "annual", "free"] },
+        "features": { "type": "array" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "planCode", "name", "priceETB", "billingPeriod"]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "User workshop membership subscription record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "workshopId": { "type": "string" },
+        "planCode": { "type": "string", "enum": ["free", "basic", "premium"] },
+        "status": { "type": "string", "enum": ["active", "pending_payment_verification", "expired", "cancelled"] },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "amountPaidETB": { "type": "number" },
+        "paymentReference": { "type": "string" },
+        "verifiedByAdmin": { "type": "boolean" }
+      },
+      "required": ["id", "userId", "planCode", "status"]
+    },
+    "PaymentRecord": {
+      "title": "PaymentRecord",
+      "description": "Audit record for subscription or contract milestone payments",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["subscription", "contract_milestone"] },
+        "userId": { "type": "string" },
+        "workshopId": { "type": "string" },
+        "consortiumId": { "type": "string" },
+        "amountETB": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "failed", "refunded"] },
+        "paymentMethod": { "type": "string" },
+        "transactionReference": { "type": "string" },
+        "verifiedBy": { "type": "string" },
+        "verifiedAt": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "type", "amountETB", "status", "createdAt"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Administrative and compliance audit trail entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "actorId": { "type": "string" },
+        "actorEmail": { "type": "string" },
+        "action": { "type": "string" },
+        "targetEntity": { "type": "string" },
+        "targetId": { "type": "string" },
+        "details": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "actorId", "action", "timestamp"]
+    },
+    "PlatformSettings": {
+      "title": "PlatformSettings",
+      "description": "Platform settings, pilot configurations, and currency preferences",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "currency": { "type": "string" },
+        "platformName": { "type": "string" },
+        "pilotRegions": { "type": "array" },
+        "disclaimerNotice": { "type": "string" }
+      },
+      "required": ["id", "currency", "platformName"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Registered user accounts and permission roles"
+    },
+    "/workshops/{workshopId}": {
+      "schema": { "$ref": "#/entities/Workshop" },
+      "description": "Workshop capacity profiles and verification status"
+    },
+    "/tenders/{tenderId}": {
+      "schema": { "$ref": "#/entities/Tender" },
+      "description": "Published tenders and opportunity specifications"
+    },
+    "/tenderAwards/{awardId}": {
+      "schema": { "$ref": "#/entities/TenderAward" },
+      "description": "Verified historical tender award records"
+    },
+    "/calendarEvents/{eventId}": {
+      "schema": { "$ref": "#/entities/CalendarEvent" },
+      "description": "Public and consortium deadline calendar events"
+    },
+    "/consortiums/{consortiumId}": {
+      "schema": { "$ref": "#/entities/Consortium" },
+      "description": "Joint bidding consortia"
+    },
+    "/consortiumMembers/{memberId}": {
+      "schema": { "$ref": "#/entities/ConsortiumMember" },
+      "description": "Consortium membership, allocations, and consents"
+    },
+    "/tenderApplications/{applicationId}": {
+      "schema": { "$ref": "#/entities/TenderApplication" },
+      "description": "Expressions of interest from workshops for tenders"
+    },
+    "/contractSegments/{segmentId}": {
+      "schema": { "$ref": "#/entities/ContractSegment" },
+      "description": "Segment allocations and quantity parcels"
+    },
+    "/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/Task" },
+      "description": "Consortium workflow and execution action items"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "User notifications"
+    },
+    "/subscriptionPlans/{planId}": {
+      "schema": { "$ref": "#/entities/SubscriptionPlan" },
+      "description": "Configurable subscription tiers"
+    },
+    "/subscriptions/{subscriptionId}": {
+      "schema": { "$ref": "#/entities/Subscription" },
+      "description": "Workshop subscription entitlements"
+    },
+    "/paymentRecords/{paymentId}": {
+      "schema": { "$ref": "#/entities/PaymentRecord" },
+      "description": "Audit records for verified and pending payments"
+    },
+    "/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Platform audit log entries"
+    },
+    "/platformSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/PlatformSettings" },
+      "description": "Global settings and disclaimers"
+    }
+  }
+}
